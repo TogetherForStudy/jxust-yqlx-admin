@@ -15,7 +15,7 @@ export function listNotifications(params: {
   category_id?: number;
 }) {
   return unwrap<PaginatedResult<Notification>>(
-    client.get("/admin/notifications/", { params })
+    client.get("/admin/notifications", { params })
   );
 }
 
@@ -24,7 +24,7 @@ export function getNotification(id: number) {
 }
 
 export function createNotification(data: { title: string; content: string; categories: number[] }) {
-  return unwrap<Notification>(client.post("/admin/notifications/", data));
+  return unwrap<Notification>(client.post("/admin/notifications", data));
 }
 
 export function updateNotification(id: number, data: { title?: string; content?: string; categories?: number[] }) {
@@ -71,7 +71,7 @@ export function listCategories() {
 }
 
 export function createCategory(data: { name: string; sort?: number; is_active?: boolean }) {
-  return unwrap<NotificationCategory>(client.post("/admin/categories/", data));
+  return unwrap<NotificationCategory>(client.post("/admin/categories", data));
 }
 
 export function updateCategory(id: number, data: { name?: string; sort?: number; is_active?: boolean }) {

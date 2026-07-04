@@ -38,5 +38,5 @@ export function getCourseTableBindCount() {
 }
 
 export function resetCourseTableBindCount(userId: number) {
-  return unwrap<string>(client.post(`/coursetable/reset/${userId}`));
+  return unwrap<string>(client.post(`/admin/coursetables/reset/${userId}`));
 }

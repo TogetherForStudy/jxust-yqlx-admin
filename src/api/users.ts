@@ -5,6 +5,10 @@ export function getUser(id: number) {
   return unwrap<UserAuthDetail>(client.get(`/admin/users/${id}`));
 }
 
+export function logoutUserSession(id: number, sid: string) {
+  return unwrap<{ message: string }>(client.post(`/admin/users/${id}/sessions/${sid}/logout`));
+}
+
 export function banUser(id: number, data: { reason?: string; duration_seconds?: number }) {
   return unwrap<{ message: string }>(client.post(`/admin/users/${id}/ban`, data));
 }
@@ -26,5 +30,5 @@ export function setLoginCredentials(id: number, data: { phone: string; password:
 }
 
 export function resetUserCourseTableBindCount(id: number) {
-  return unwrap<string>(client.post(`/coursetable/reset/${id}`));
+  return unwrap<string>(client.post(`/admin/coursetables/reset/${id}`));
 }

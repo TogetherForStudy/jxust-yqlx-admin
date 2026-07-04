@@ -67,6 +67,8 @@ export interface UserAuthDetail {
   block_type: string;
   block_reason: string;
   block_expires_at: number;
+  points: number;
+  pomodoro_count: number;
 }
 
 export interface AuthSession {

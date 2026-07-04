@@ -19,9 +19,9 @@ export function reviewContribution(id: number, data: {
   content?: string;
   categories?: number[];
 }) {
-  return unwrap<Contribution>(client.post(`/contributions/${id}/review`, data));
+  return unwrap<Contribution>(client.post(`/admin/contributions/${id}/review`, data));
 }
 
 export function getContributionStatsAdmin() {
-  return unwrap<ContributionStats>(client.get("/contributions/stats-admin"));
+  return unwrap<ContributionStats>(client.get("/admin/contributions/stats-admin"));
 }

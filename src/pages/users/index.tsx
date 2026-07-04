@@ -7,6 +7,7 @@ import {
   kickUser,
   setLoginCredentials,
   resetUserCourseTableBindCount,
+  logoutUserSession,
 } from "@/api/users";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,8 @@ import {
   Ban,
   ShieldCheck,
   RotateCcw,
+  Coins,
+  Timer,
 } from "lucide-react";
 import type { UserAuthDetail } from "@/types/api";
 
@@ -119,6 +122,15 @@ function UserDetail({ user, queryClient }: { user: UserAuthDetail; queryClient: 
     onError: (e) => toast.error(e.message),
   });
 
+  const logoutSessionMut = useMutation({
+    mutationFn: (sid: string) => logoutUserSession(info.id, sid),
+    onSuccess: () => {
+      toast.success("已退出该设备");
+      queryClient.invalidateQueries({ queryKey: ["admin-user", info.id] });
+    },
+    onError: (e) => toast.error(e.message),
+  });
+
   const fields = [
     { label: "昵称", value: info.nickname, icon: User, color: "text-blue-500" },
     { label: "真实姓名", value: info.real_name, icon: User, color: "text-teal-500" },
@@ -128,6 +140,8 @@ function UserDetail({ user, queryClient }: { user: UserAuthDetail; queryClient: 
     { label: "专业", value: info.major, icon: BookOpen, color: "text-orange-500" },
     { label: "班级", value: info.class_id, icon: GraduationCap, color: "text-rose-500" },
     { label: "注册时间", value: info.created_at ? new Date(info.created_at).toLocaleString() : "-", icon: Calendar, color: "text-muted-foreground" },
+    { label: "积分", value: user.points.toString(), icon: Coins, color: "text-yellow-500" },
+    { label: "番茄钟次数", value: user.pomodoro_count.toString(), icon: Timer, color: "text-red-500" },
   ];
 
   return (
@@ -190,6 +204,15 @@ function UserDetail({ user, queryClient }: { user: UserAuthDetail; queryClient: 
                     <Badge variant="secondary" className="text-[10px] px-1 py-0 h-4 shrink-0">{d.client_type}</Badge>
                     <span className="truncate flex-1 min-w-0">{d.device_type}</span>
                     <span className="text-xs text-muted-foreground shrink-0">{new Date(d.issued_at * 1000).toLocaleDateString()}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5 shrink-0 text-muted-foreground hover:text-destructive"
+                      disabled={logoutSessionMut.isPending}
+                      onClick={() => logoutSessionMut.mutate(d.sid)}
+                    >
+                      <LogOut className="h-3 w-3" />
+                    </Button>
                   </div>
                 ))}
               </div>

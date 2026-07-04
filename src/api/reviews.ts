@@ -8,18 +8,18 @@ export function listReviews(params: {
   teacher_name?: string;
 }) {
   return unwrap<PaginatedResult<TeacherReview>>(
-    client.get("/reviews/", { params })
+    client.get("/admin/reviews", { params })
   );
 }
 
 export function approveReview(id: number, data?: { admin_note?: string }) {
-  return unwrap<{ message: string }>(client.post(`/reviews/${id}/approve`, data ?? {}));
+  return unwrap<{ message: string }>(client.post(`/admin/reviews/${id}/approve`, data ?? {}));
 }
 
 export function rejectReview(id: number, data?: { admin_note?: string }) {
-  return unwrap<{ message: string }>(client.post(`/reviews/${id}/reject`, data ?? {}));
+  return unwrap<{ message: string }>(client.post(`/admin/reviews/${id}/reject`, data ?? {}));
 }
 
 export function deleteReview(id: number) {
-  return unwrap<{ message: string }>(client.delete(`/reviews/${id}`));
+  return unwrap<{ message: string }>(client.delete(`/admin/reviews/${id}`));
 }

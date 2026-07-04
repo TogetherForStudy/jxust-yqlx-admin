@@ -2,7 +2,7 @@ import client, { unwrap } from "./client";
 import type { PointsTransaction, PointsStats, PaginatedResult } from "@/types/api";
 
 export function grantPoints(data: { user_id: number; points: number; description: string }) {
-  return unwrap<{ message: string }>(client.post("/points/grant", data));
+  return unwrap<{ message: string }>(client.post("/admin/points/grant", data));
 }
 
 export function getPointsStats(userId: number) {
