@@ -48,7 +48,6 @@ export interface UserProfile {
   class_id: string;
   college: string;
   major: string;
-  role: number;
   role_tags: string[];
   status: number;
   created_at: string;
